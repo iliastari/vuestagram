@@ -15,11 +15,11 @@
         <div class="divider"></div>
       </div>
 
-      <input class="input" type="text" placeholder="Mobile Number or Email">
-      <input class="input" type="text" placeholder="Full Name">
-      <input class="input" type="text" placeholder="Username">
-      <input class="input" type="text" placeholder="Password">
-       <button class="btn next">Next</button>
+      <input class="input" type="text" v-model="email" placeholder="Email">
+      <input class="input" type="text" v-model="fullname" placeholder="Full Name">
+      <input class="input" type="text" v-model="username" placeholder="Username">
+      <input class="input" type="text" v-model="password" placeholder="Password">
+       <button class="btn next" @click="register">Next</button>
        <div class="terms">
          By signing up, you agree to our Terms . Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .
   
@@ -38,10 +38,32 @@
 </template>
 
 <script>
+import Auth from '@/server/Auth'
 import Logo from '@/components/assets/Logo.vue'
+
 
 export default {
   name: 'Register',
+  data() {
+    return {
+      email: '123',
+      fullname: '4',
+      username: '5',
+      password: '6'
+    }
+  },
+  methods: {
+   async register() {
+      const response = await Auth.register({
+        email: this.email,
+        fullname: this.fullname,
+        username: this.username,
+        password: this.password
+      })
+
+            console.log(response.data)
+    }
+  },
   components: {
     Logo
   }
