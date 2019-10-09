@@ -15,11 +15,14 @@
         <div class="divider"></div>
       </div>
 
-      <input class="input" type="text" v-model="email" placeholder="Email">
+      <input class="input" type="email" v-model="email" placeholder="Email">
       <input class="input" type="text" v-model="fullname" placeholder="Full Name">
       <input class="input" type="text" v-model="username" placeholder="Username">
-      <input class="input" type="text" v-model="password" placeholder="Password">
+      <input class="input" type="password" v-model="password" placeholder="Password">
        <button class="btn next" @click="register">Next</button>
+
+       <div class="error" v-html="error" />
+
        <div class="terms">
          By signing up, you agree to our Terms . Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .
   
@@ -46,22 +49,28 @@ export default {
   name: 'Register',
   data() {
     return {
-      email: '123',
-      fullname: '4',
-      username: '5',
-      password: '6'
+      email: '',
+      fullname: '',
+      username: '',
+      password: '',
+      error: null
     }
   },
   methods: {
    async register() {
-      const response = await Auth.register({
+     try {
+      await Auth.register({
         email: this.email,
         fullname: this.fullname,
         username: this.username,
         password: this.password
       })
 
-            console.log(response.data)
+      this.error = ''
+
+     } catch (err) {
+       this.error = err.response.data.error
+     }
     }
   },
   components: {
@@ -79,6 +88,10 @@ a {
   font-weight:600;
   color: #3897f0;
   text-decoration:none;
+}
+.error {
+  color: #ff0000;
+  font-size:14px;
 }
 .container {
   max-width:350px;

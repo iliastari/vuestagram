@@ -6,12 +6,12 @@
         <Logo />
       
         
-        <input class="input" type="text" placeholder="Phone number, username, or email">
-        <input class="input" type="text" placeholder="Password">
+        <input class="input" type="text" v-model="email" placeholder="Username, or email">
+        <input class="input" type="password" v-model="password" placeholder="Password">
         
-        <router-link :to="{name: 'Feed'}"><button class="btn next">Next</button> </router-link>
+        <button @click="login" class="btn next">Next</button>
       
-        
+        <div class="error" v-html="error" />
         
         
       </div>
@@ -28,11 +28,34 @@
 </template>
 
 <script>
+import Auth from '@/server/Auth'
 import Logo from '@/components/assets/Logo.vue'
 
 
 export default {
   name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: null
+    }
+  },
+  methods: {
+   async login() {
+     try {
+      await Auth.login({
+        email: this.email,
+        password: this.password
+      })
+
+      this.error = ''
+
+     } catch (err) {
+       this.error = err.response.data.error
+     }
+    }
+  },
   components: {
     Logo
   }
@@ -43,6 +66,10 @@ export default {
 <style scoped>
 h2, h3, h4 {
   margin-bottom:10px;
+}
+.error {
+  color:#ff0000;
+  font-size:14px;
 }
 a {
   font-weight:600;

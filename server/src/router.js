@@ -1,8 +1,8 @@
-module.exports = (app) => {
-    app.post('/register', (req, res) => {
-        res.send({
-            message: `${req.body.email}, ${req.body.password}  is registered!`,
+const AuthController = require('./controllers/AuthController')
+const AuthValidation = require('./validation/AuthValidation')
 
-        })
-    })
+module.exports = (app) => {
+    app.post('/register', AuthValidation.register, AuthController.register)
+
+    app.post('/login', AuthController.login)
 }
