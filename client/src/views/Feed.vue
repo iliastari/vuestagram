@@ -32,7 +32,6 @@ export default {
     margin: 0 auto;
     display:grid;
     grid-template-columns: repeat(2, 1fr);
-
-    }
+}
 
 </style>

@@ -23,7 +23,7 @@ export default {
 </script>
 
 
-<style>
+<style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Grand+Hotel&display=swap');
 
@@ -35,8 +35,14 @@ export default {
 }
 a {
   text-decoration: none;
+  color:#000;
+  
+  &:visited {
+    color:#000;
+  }
 }
 body {
   background:#fafafa;
+  overflow-y: scroll !important;
 }
 </style>

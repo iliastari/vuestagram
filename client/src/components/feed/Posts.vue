@@ -1,7 +1,8 @@
 <template>
   <div class="posts-container">
 
-    <article class="posts">
+ 
+   <article class="posts">
         <div class="post-top">
             <div class="profile-picture">
 
@@ -17,109 +18,6 @@
             Bottom
         </div>
     </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
-    <article class="posts">
-        <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
-            <div class="username">
-                warrenbuffet
-            </div>
-        </div>
-        <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
-        </div>
-        <div class="post-bottom">
-            Bottom
-        </div>
-    </article>
-
     
   </div>
 </template>

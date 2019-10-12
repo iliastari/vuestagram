@@ -4,9 +4,9 @@
         <div class="userinfo">
             <div class="profile-picture"></div>
             <div class="username">
-                iliastari
+                {{ userData('username') }}
                 <div class="description">
-                    it's all about focus baby.
+                    {{ userData('description') }}
                 </div>
             </div>
         </div>
@@ -77,8 +77,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  computed: {
+      ...mapGetters([
+          'userData'
+      ])
+  }
 }
 </script>
 

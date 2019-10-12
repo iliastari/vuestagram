@@ -14,13 +14,16 @@
         <div class="dividerText">OR</div>
         <div class="divider"></div>
       </div>
+      
 
-      <input class="input" type="email" v-model="email" placeholder="Email">
-      <input class="input" type="text" v-model="fullname" placeholder="Full Name">
-      <input class="input" type="text" v-model="username" placeholder="Username">
-      <input class="input" type="password" v-model="password" placeholder="Password">
-       <button class="btn next" @click="register">Next</button>
-
+      <form @submit.prevent="register">
+        <input class="input" type="email" v-model="email" placeholder="Email">
+        <input class="input" type="text" v-model="fullname" placeholder="Full Name">
+        <input class="input" type="text" v-model="username" placeholder="Username">
+        <input class="input" type="password" v-model="password" placeholder="Password">
+        
+        <button type="submit" class="btn next">Next</button>
+      </form>
        <div class="error" v-html="error" />
 
        <div class="terms">
@@ -59,14 +62,18 @@ export default {
   methods: {
    async register() {
      try {
-      await Auth.register({
+      const response = await Auth.register({
         email: this.email,
         fullname: this.fullname,
         username: this.username,
         password: this.password
       })
 
-      this.error = ''
+      this.$store.dispatch('setToken', response.data.token)
+      this.$store.dispatch('setUser', response.data.user)
+      this.$router.push({
+        name: 'Feed'
+      })
 
      } catch (err) {
        this.error = err.response.data.error

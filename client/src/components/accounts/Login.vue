@@ -4,13 +4,14 @@
       <div class="register box">
         
         <Logo />
-      
-        
+
+        <form @submit.prevent="login">
         <input class="input" type="text" v-model="email" placeholder="Username, or email">
         <input class="input" type="password" v-model="password" placeholder="Password">
         
-        <button @click="login" class="btn next">Next</button>
-      
+        <button type="submit" class="btn next">Next</button>
+        </form>
+
         <div class="error" v-html="error" />
         
         
@@ -44,13 +45,16 @@ export default {
   methods: {
    async login() {
      try {
-      await Auth.login({
+      const response = await Auth.login({
         email: this.email,
         password: this.password
       })
 
-      this.error = ''
-
+      this.$store.dispatch('setToken', response.data.token)
+      this.$store.dispatch('setUser', response.data.user)
+      this.$router.push({
+        name: 'Feed'
+      })
      } catch (err) {
        this.error = err.response.data.error
      }
