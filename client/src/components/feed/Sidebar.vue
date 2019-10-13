@@ -3,8 +3,8 @@
 
         <div class="userinfo">
 
-            <img v-if="!userData('profile_picture')" class="profile-picture" src="http://127.0.0.1:3000/images/user/profile/default.jpg" alt="profile">   
-            <img v-else class="profile-picture" :src="'http://127.0.0.1:3000/images/user/profile/' + userData('profile_picture') " alt="profile">
+            <img v-if="!userData('profile_picture')" class="profile-picture" :src="publicImageUrl + 'user/profile/default.jpg'" alt="profile">   
+            <img v-else class="profile-picture" :src="publicImageUrl + 'user/profile/' + userData('profile_picture') " alt="profile">
             
             <div class="username">
                 {{ userData('username') }}
@@ -91,7 +91,8 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'userData'
+          'userData',
+          'publicImageUrl'
       ])
   }
 }
@@ -113,7 +114,6 @@ export default {
         .profile-picture {
             width:50px;
             height:50px;
-            background:red;
             border-radius:50%;
             cursor:pointer;
         }

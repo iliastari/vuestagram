@@ -37,12 +37,19 @@ module.exports = (sequelize, DataTypes) => {
         },
         profile_picture: {
             type: DataTypes.STRING,
+            defaultValue: "default.jpg"
         }
-        }, {
+        }, 
+        
+        {
             hooks: {
                 beforeCreate: hashPassword
-            }
-    })
+            },
+   
+
+        }
+        
+        )
 
     User.prototype.comparePassword = function (password)  {
         return bcrypt.compareAsync(password, this.password)

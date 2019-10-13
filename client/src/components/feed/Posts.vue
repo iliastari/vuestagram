@@ -1,18 +1,14 @@
 <template>
   <div class="posts-container">
-
- 
-   <article class="posts">
+   <article v-for="post in posts" :key="post.id" class="posts">
         <div class="post-top">
-            <div class="profile-picture">
-
-            </div>
+            <img class="profile-picture" :src="publicImageUrl + 'user/profile/' + getUserInfo(post.user_id, 'profile_picture') " >
             <div class="username">
-                warrenbuffet
+               {{ getUserInfo(post.user_id, 'username') }}
             </div>
         </div>
         <div class="post-image">
-            <img src="http://www.nirujahealthtech.com/wp-content/uploads/2019/06/tumor_nht.jpeg" alt="imagedump">
+            <img :src="publicImageUrl + '/user/posts/' + post.img_url" alt="imagedump">
         </div>
         <div class="post-bottom">
             Bottom
@@ -23,8 +19,49 @@
 </template>
 
 <script>
+import Posts from '@/server/Posts'
+import Users from '@/server/Users'
+
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'Posts'
+  name: 'Posts',
+  data() {
+      return {
+          posts: {},
+          users: {}
+      }
+  },
+  methods: {
+    getUserInfo(value, key) {
+        // Pass ID of the user and what column you want to show
+        // For example a user with id = 1 and i want his usename
+      for (let i = 0; i < this.users.length; i++) {
+          if(this.users[i].id == value) 
+          return this.users[i][key]
+        }
+    }
+  },
+  async mounted () {
+
+     try {
+        const res = await Posts.getAllPostsFromUser(this.userData('id'))  
+        this.posts = res.data.posts
+        this.users = res.data.users
+
+
+     } catch (err) {
+       this.error = err.response.data.error
+     }
+
+
+  },
+computed: {
+      ...mapGetters([
+          'userData',
+          'publicImageUrl'
+      ]),
+  }
 }
 </script>
 
@@ -47,7 +84,6 @@ export default {
         .profile-picture {
             width:30px;
             height:30px;
-            background:red;
             border-radius:50%;
             cursor:pointer;
         }

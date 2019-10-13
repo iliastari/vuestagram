@@ -18,10 +18,9 @@ export default new Vuex.Store({
           })
     ],
     state: {
-        //token: localStorage.getItem('token') || null,
-        //data:  localStorage.getItem('data') || null
         token: null,
-        data: null
+        data: null,
+        publicImgUrl: 'hdfgfdgfd'
     },
     getters: {
         loggedIn(state) {
@@ -32,6 +31,9 @@ export default new Vuex.Store({
                 return state.data[value]
                 else
                 return "No passwords"
+        },
+        publicImageUrl(state) {
+            return state.publicImgUrl
         }
     },
     mutations: {
@@ -41,13 +43,11 @@ export default new Vuex.Store({
 
         setUser (state, data) {
             state.data = data
-            //localStorage.setItem('data', JSON.stringify(data))
         },
         
         setDestroyToken(state)
         {
             if(state.token) {
-                //localStorage.removeItem('token')
                 state.token = null,
                 state.data = null
             }
@@ -55,7 +55,6 @@ export default new Vuex.Store({
     },
     actions: {
         setToken ({commit}, token) {
-           // localStorage.setItem('token', token)
             commit('setToken', token)
         },
         setUser ({commit}, token) {

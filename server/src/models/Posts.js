@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         },  
         post_desc: {
             type: DataTypes.STRING
-        }
+        }, 
     })
 
   
