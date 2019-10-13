@@ -1,33 +1,33 @@
 <template>
     <div class="posts">
-        <article class="post">
-            <img src="https://www.desibucket.com/wp-content/uploads/2017/05/Fantastic-Nature-Image.jpg" alt="post">
+        <article v-for="post in data" :key="post.id" class="post">
+            <img :src="publicImageUrl + '/user/posts/' + post.img_url" alt="imagedump">
         </article>  
-        
-        <article class="post">
-            <img src="https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/tnc_48980557.jpg?crop=961,0,1928,2571&wid=600&hei=800&scl=3.21375" alt="post">
-        </article>        
-        
-        <article class="post">
-            <img src="https://androidwalls.net/wp-content/uploads/2014/10/London%20Big%20Ben%20Illustration%20Android%20Wallpaper.jpg" alt="post">
-        </article>    
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
-    props: ['userData'],
+    props: ['userinfo'],
     data: function() {
         return {
-            data: this.userData
+            data: this.userinfo
         }
     },
-      watch: {
+
+    watch: {
         '$route.params.username' (to, from) {
-            this.data = this.userData
+            this.data = this.userinfo
         }
     }, 
+    computed: {
+      ...mapGetters([
+          'userData',
+          'publicImageUrl'
+      ]),
+  }
 }
 </script>
 
@@ -43,7 +43,7 @@ export default {
         width:100%;
         overflow:hidden;
         position: relative;
-        
+        cursor:pointer;
       
         &::before {
             content: "";

@@ -34,11 +34,8 @@ module.exports = {
 
 
         
-        async getPostOfUser (req, res) {
-    
+        async getFeedPosts (req, res) {
             try {
-            
-
                /* 
                 
                 I want to check if they have a relationship 
@@ -73,6 +70,43 @@ module.exports = {
             })
         }
         },  
+
+        async getProfilePosts (req, res) {
+
+                    try {
+                      /*
+                        I want to check if they have a relationship 
+                        based on their relation i check the id that the user follows
+                        and find all posts with that id
+                        
+                    */
+                    
+                    const {nameorid} = req.params
+                    
+                  
+                    const userinfo = await User.findAll( { limit:1, where: { [Op.or]: [{username: nameorid},{id: nameorid}]}, attributes: ['id', 'username','fullname','profile_picture','description','profile_private'] })
+
+                    //await User.findOne({where: { username: username }, attributes: {exclude: ['password']}})
+                    const user_id = userinfo.map(user => (user.id))
+
+                    const getPosts = await Posts.findAll({ 
+                        where: {user_id: user_id}
+                    })
+
+                    res.send({
+                        posts: getPosts,
+                        userinfo: userinfo
+                      
+                    })
+
+
+                } catch(err) {
+                    res.status(500).send({
+                        error: 'error bruv'
+                    })
+                } 
+
+                },  
 
         
         getAllPosts (req, res) {

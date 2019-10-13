@@ -38,7 +38,11 @@ module.exports = (sequelize, DataTypes) => {
         profile_picture: {
             type: DataTypes.STRING,
             defaultValue: "default.jpg"
-        }
+        },
+        profile_private: {
+            type: DataTypes.ENUM('false','true'),
+            defaultValue: 'false'
+        },
         }, 
         
         {

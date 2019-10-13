@@ -3,9 +3,11 @@
    <article v-for="post in posts" :key="post.id" class="posts">
         <div class="post-top">
             <img class="profile-picture" :src="publicImageUrl + 'user/profile/' + getUserInfo(post.user_id, 'profile_picture') " >
-            <div class="username">
-               {{ getUserInfo(post.user_id, 'username') }}
-            </div>
+            <router-link :to="{ name: 'Profile', params: {username: getUserInfo(post.user_id, 'username') } }" >    
+                <div class="username">
+                {{ getUserInfo(post.user_id, 'username') }}
+                </div>
+            </router-link>
         </div>
         <div class="post-image">
             <img :src="publicImageUrl + '/user/posts/' + post.img_url" alt="imagedump">
@@ -45,7 +47,7 @@ export default {
   async mounted () {
 
      try {
-        const res = await Posts.getAllPostsFromUser(this.userData('id'))  
+        const res = await Posts.userFeedPosts(this.userData('id'))  
         this.posts = res.data.posts
         this.users = res.data.users
 

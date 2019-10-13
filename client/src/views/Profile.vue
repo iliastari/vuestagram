@@ -1,70 +1,34 @@
 <template>
     <div class="container">
-        <Userinfo :userData="isUser" />
-        <Posts :userData="isUser" />
+        <Userinfo v-if="data" :userinfo="data.userinfo[0]" />
+        <UserPosts v-if="data" :userinfo="data.posts" />
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import Posts from '@/server/Posts'
 
 import Userinfo from '@/components/profile/Userinfo.vue'
-import Posts from '@/components/profile/Posts.vue'
+import UserPosts from '@/components/profile/Posts.vue'
 
 export default {
     data() {
         return {
             paramName: this.$route.params.username,
+            data: ''
         }
     },
-    computed: {
-        ...mapGetters([
-            'userData'
-        ]),    
-          isUser() {
-            if(this.$route.params.username == this.userData('username')) {
-                /* 
-                    Return own userdata
-                    - User ID
-                    - Username
-                    - Full name
-                    - Description 
-                    - Profile picture
-                */
-
-               const data =  {
-                   id: this.userData('id'), 
-                   username: this.userData('username'), 
-                   fullname: this.userData('fullname'), 
-                   desc: this.userData('description'),
-                   profilepic: this.userData('profile_picture'),
-
-                }
-
-                return data
-            } else {
-                // return someone else their userdata
-
-                /* 
-                    Search userdata based on ID 
-                    and find ID through the username param
-                */
-                  const data =  {
-                   id: "9999999", 
-                   username: "Username", 
-                   fullname: "Fullname", 
-                   desc: "Description",
-                   profilepic: "",
-                   visiting: true
-                }
-                
-                return data
+    async mounted() {
+            try {
+                await Posts.userProfilePosts(this.paramName).then(response => (this.data = response.data))
+                console.log(this.data)
+            } catch (err) {
+                this.error = err.response.data.error
             }
-        }
     },
     components: {
         Userinfo,
-        Posts
+        UserPosts
     },
    
 }

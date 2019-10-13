@@ -7,7 +7,9 @@
             <img v-else class="profile-picture" :src="publicImageUrl + 'user/profile/' + userData('profile_picture') " alt="profile">
             
             <div class="username">
+                 <router-link :to="{ name: 'Profile', params: {username: userData('username')} }" >
                 {{ userData('username') }}
+                 </router-link>
                 <div class="description">
                     {{ userData('description') }}
                 </div>

@@ -1,19 +1,17 @@
 <template>
     <div class="userProfile">
+
         <div class="userAvatar">
-
-            <img v-if="!data.profilepic" class="img" src="http://127.0.0.1:3000/images/user/profile/default.jpg" alt="profile">   
-            <img v-else class="img" :src="'http://127.0.0.1:3000/images/user/profile/' + data.profilepic " alt="profile">
-
+            <img class="img" :src="'http://127.0.0.1:3000/images/user/profile/' +  data.profile_picture " alt="profile">
         </div>    
         <div class="userInfo">
             <div class="username">
                     
-                {{ data.username }}
+            {{data.username}}
                 
 
-                <button v-if="!data.visiting" class="btn edit">Edit Profile</button>
-                <button v-if="data.visiting" class="btn follow">Follow</button>
+                <button v-if="data.id == userData('id')" class="btn edit">Edit Profile</button>
+                <button v-else class="btn follow">Follow</button> 
                 
                 
                
@@ -37,11 +35,11 @@
             </div>
 
             <div class="fullname">
-                  {{ data.fullname }}
+                  {{data.fullname}}
             </div> 
             
             <div class="desc">
-                  {{ data.desc }}
+                  {{data.description}}
             </div>
           
         </div>
@@ -50,19 +48,26 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
-    props: ['userData'],
+    props: ['userinfo'],
     data: function() {
         return {
-            data: this.userData
+            data: this.userinfo
         }
     },
       watch: {
         '$route.params.username' (to, from) {
-            this.data = this.userData
+            this.data = this.userinfo
         }
     }, 
+    computed: {
+        ...mapGetters([
+            'userData'
+        ]),    
+        
+    },
 }
 </script>
 

@@ -20,7 +20,7 @@ export default new Vuex.Store({
     state: {
         token: null,
         data: null,
-        publicImgUrl: 'hdfgfdgfd'
+        publicImgUrl: 'http://127.0.0.1:3000/'
     },
     getters: {
         loggedIn(state) {
