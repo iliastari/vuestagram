@@ -1,7 +1,10 @@
 <template>
     <div class="userProfile">
         <div class="userAvatar">
-            <img class="img" src="https://pbs.twimg.com/profile_images/1036730403514736650/PCRxFiEt_400x400.jpg" alt="profile">
+
+            <img v-if="!data.profilepic" class="img" src="http://127.0.0.1:3000/images/user/profile/default.jpg" alt="profile">   
+            <img v-else class="img" :src="'http://127.0.0.1:3000/images/user/profile/' + data.profilepic " alt="profile">
+
         </div>    
         <div class="userInfo">
             <div class="username">
@@ -78,9 +81,8 @@ export default {
 }
 .userAvatar {
    // background:red;
-    grid-column: 1 / span 2;
+    grid-column: 0.2 / span 2;
     grid-row: 1;
-    margin-right:30px;
     display:flex;
     align-items:center;
     justify-content: center;

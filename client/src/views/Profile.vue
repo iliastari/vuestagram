@@ -29,6 +29,7 @@ export default {
                     - Username
                     - Full name
                     - Description 
+                    - Profile picture
                 */
 
                const data =  {
@@ -36,7 +37,7 @@ export default {
                    username: this.userData('username'), 
                    fullname: this.userData('fullname'), 
                    desc: this.userData('description'),
-
+                   profilepic: this.userData('profile_picture'),
 
                 }
 
@@ -53,6 +54,7 @@ export default {
                    username: "Username", 
                    fullname: "Fullname", 
                    desc: "Description",
+                   profilepic: "",
                    visiting: true
                 }
                 

@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
         }, 
         password: {
             type: DataTypes.STRING,
+        },
+        profile_picture: {
+            type: DataTypes.STRING,
         }
         }, {
             hooks: {

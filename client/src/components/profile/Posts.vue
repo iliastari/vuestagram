@@ -40,7 +40,6 @@ export default {
 
 
     .post {
-        background:red;
         width:100%;
         overflow:hidden;
         position: relative;

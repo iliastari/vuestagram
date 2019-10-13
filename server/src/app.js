@@ -6,9 +6,14 @@ const {sequelize} = require('./models')
 const config = require('./settings/config')
 
 const app = express()
+
+app.use(express.static(__dirname + '/public'));
+
+
 app.use(morgan('tiny'))
 app.use(bodyParser.json())
 app.use(cors())
+
 
 require('./router')(app)
 

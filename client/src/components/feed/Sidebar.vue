@@ -2,7 +2,10 @@
     <div class="sidebar">
 
         <div class="userinfo">
-            <div class="profile-picture"></div>
+
+            <img v-if="!userData('profile_picture')" class="profile-picture" src="http://127.0.0.1:3000/images/user/profile/default.jpg" alt="profile">   
+            <img v-else class="profile-picture" :src="'http://127.0.0.1:3000/images/user/profile/' + userData('profile_picture') " alt="profile">
+            
             <div class="username">
                 {{ userData('username') }}
                 <div class="description">
@@ -81,6 +84,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Sidebar',
+  data() {
+      return {
+          data: this.userData
+      }
+  },
   computed: {
       ...mapGetters([
           'userData'
