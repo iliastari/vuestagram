@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <Userinfo v-if="data" :userinfo="data.userinfo[0]" />
-        <UserPosts v-if="data" :userinfo="data.posts" />
+        <Userinfo v-if="data" :userinfo="data" />
+        <UserPosts v-if="data" :userinfo="data.posts['rows']" />
     </div>
 </template>
 
@@ -18,12 +18,14 @@ export default {
             data: ''
         }
     },
+    
     async mounted() {
+            this.$Progress.start()
             try {
-                await Posts.userProfilePosts(this.paramName).then(response => (this.data = response.data))
-                console.log(this.data)
+                await Posts.userProfilePosts(this.paramName).then(response => (this.data = response.data, this.$Progress.finish()))
             } catch (err) {
                 this.error = err.response.data.error
+                this.$Progress.fail()
             }
     },
     components: {

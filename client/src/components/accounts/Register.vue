@@ -61,6 +61,7 @@ export default {
   },
   methods: {
    async register() {
+      this.$Progress.start()
      try {
       const response = await Auth.register({
         email: this.email,
@@ -71,12 +72,14 @@ export default {
 
       this.$store.dispatch('setToken', response.data.token)
       this.$store.dispatch('setUser', response.data.user)
+       this.$Progress.finish()
       this.$router.push({
         name: 'Feed'
       })
 
      } catch (err) {
        this.error = err.response.data.error
+        this.$Progress.fail()
      }
     }
   },

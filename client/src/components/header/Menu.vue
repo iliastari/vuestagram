@@ -1,23 +1,20 @@
 <template>
     <div class="menu">
         <div class="upload">
-             <font-awesome-icon class="icon" icon="camera" />
+             <font-awesome-icon class="icon" :icon="['fas', 'camera']" />
         </div>
         
         <div class="notifications">
-            <font-awesome-icon class="icon" icon="heart" />
+            <font-awesome-icon class="icon noti" :icon="['far', 'heart']" />
         </div>
         
         <router-link :to="{ name: 'Profile', params: {username: userData('username')} }" >
             <div class="profile"> 
-                <font-awesome-icon class="icon" icon="user" />
+                <font-awesome-icon class="icon" :icon="['far', 'user']"  />
             </div>
         </router-link>
         
-        <!-- temporary logout button here in menu -->
-        <div @click="logout" class="profile">
-              <font-awesome-icon class="icon" icon="sign-out-alt" />
-        </div>
+    
     </div>
 
 </template>
@@ -30,14 +27,6 @@ export default {
       ...mapGetters([
           'userData'
       ])
-    },
-    methods: {
-        logout() {
-            this.$store.dispatch('destroyToken')
-            this.$router.push({
-                name: 'Register'
-            })
-        }
     }
 }
 </script>

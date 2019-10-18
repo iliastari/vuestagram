@@ -1,6 +1,5 @@
 <template>
     <div class="userProfile">
-
         <div class="userAvatar">
             <img class="img" :src="'http://127.0.0.1:3000/images/user/profile/' +  data.profile_picture " alt="profile">
         </div>    
@@ -8,13 +7,16 @@
             <div class="username">
                     
             {{data.username}}
-                
+                <template v-if="data.id == userData('id')">
+                <button class="btn edit">Edit Profile</button>
+                 <!-- temporary logout button here in menu -->
+                <span @click="logout"  class="logout">
+                    <font-awesome-icon class="icon" :icon="['fas', 'cog']" />
+                </span>
+                </template>
+                <button v-else-if="relationship.following == false" @click="followUser()" class="btn follow">Follow</button> 
+                <button v-else @click="unfollowUser()" class="btn unfollow">Following</button> 
 
-                <button v-if="data.id == userData('id')" class="btn edit">Edit Profile</button>
-                <button v-else class="btn follow">Follow</button> 
-                
-                
-               
                <!--               
                     <button>settings</button>
                 -->
@@ -22,15 +24,18 @@
             
             <div class="stats">
                   <span class="posts">
-                      <span class="count">50</span> posts
+                      <span class="count">{{ postCount }}</span> 
+                      {{ postsText }}
                   </span> 
 
                   <span class="followers">
-                      <span class="count">768</span> followers
+                      <span class="count">{{followers}}</span> 
+                      {{ followersText }}
                   </span> 
                   
                   <span class="following">
-                      <span class="count">128</span> following
+                      <span class="count">{{following}}</span> 
+                      {{ followingText }}
                   </span>
             </div>
 
@@ -48,24 +53,100 @@
 </template>
 
 <script>
+import Relationship from '@/server/Relationship'
 import { mapGetters } from 'vuex'
 
 export default {
     props: ['userinfo'],
     data: function() {
         return {
-            data: this.userinfo
+            data: this.userinfo.userinfo[0],
+            postCount: this.userinfo.posts.count,
+            following: this.userinfo.following,
+            followers: this.userinfo.followers,
+            relationship: []
         }
     },
-      watch: {
-        '$route.params.username' (to, from) {
+    watch: {
+        '$route.params.username' () {
             this.data = this.userinfo
         }
     }, 
+    async mounted() {
+        if(this.data) {
+            try {
+            await Relationship.show({
+                user_one_id: this.userData('id'),
+                user_two_id: this.data.id
+            }).then(response => this.relationship = response.data)
+
+   
+            } catch (err) {
+            this.error = err.response.data.error
+
+            }
+        }
+    },
+    methods: {
+        async followUser() {
+            if(this.data) {
+                try {
+
+                await Relationship.follow({
+                    user_one_id: this.userData('id'),
+                    user_two_id: this.data.id
+                }).then(response => response.data)
+                 
+                this.followers = this.followers+1
+                this.relationship.following  = true
+
+                } catch (err) {
+                    this.error = err.response.data.error
+                }
+            }
+           
+        },
+
+        async unfollowUser() {
+             if(this.data) {
+                try {
+
+                await Relationship.unfollow({
+                    user_one_id: this.userData('id'),
+                    user_two_id: this.data.id
+                }).then(response => response.data)
+                 
+                this.followers = this.followers-1
+                this.relationship.following  = false
+                
+    
+                } catch (err) {
+                this.error = err.response.data.error
+
+                }
+            }
+        },
+        logout() {
+            this.$store.dispatch('destroyToken')
+            this.$router.push({
+                name: 'Register'
+            })
+        }
+    
+    },
     computed: {
         ...mapGetters([
             'userData'
         ]),    
+        postsText() {
+            return this.postCount == 1 ? "post" : "posts"
+        },
+        followersText() {
+            return this.followers == 1 ? "follower" : "followers"
+        },
+        followingText() {
+            return "following"
+        }
         
     },
 }
@@ -104,6 +185,15 @@ export default {
     grid-row: 1;
     position:relative;
 
+
+    .logout {
+        position:absolute;
+        top:6px;
+        margin-left:110px;
+        font-size:20px;
+        cursor:pointer;
+    }
+
     .username {
         font-size:28px; 
     }
@@ -129,6 +219,13 @@ export default {
             border: 1px solid #3897f0;
             background:#3897f0;
             color:#fff;
+             padding:5px 20px 5px 20px;
+           
+
+        }
+        &.unfollow {
+            border: 1px solid #dbdbdb;
+            background:transparent;
              padding:5px 20px 5px 20px;
            
 

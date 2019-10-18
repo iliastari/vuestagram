@@ -2,6 +2,9 @@
   <div id="app">
     <Navbar v-if="showNav" />
     <router-view :key="$route.fullPath"/>
+    
+    <!-- set progressbar -->
+    <vue-progress-bar></vue-progress-bar>
   </div>
 </template>
 
@@ -44,5 +47,11 @@ a {
 body {
   background:#fafafa;
   overflow-y: scroll !important;
+}
+.footer {
+  text-align:center;
+  color:#ccc;
+  padding-bottom:20px;
+  font-size:14px;
 }
 </style>

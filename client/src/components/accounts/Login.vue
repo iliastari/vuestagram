@@ -44,7 +44,9 @@ export default {
   },
   methods: {
    async login() {
+     this.$Progress.start()
      try {
+       this.$Progress.finish()
       const response = await Auth.login({
         email: this.email,
         password: this.password
@@ -56,6 +58,7 @@ export default {
         name: 'Feed'
       })
      } catch (err) {
+       this.$Progress.fail()
        this.error = err.response.data.error
      }
     }
