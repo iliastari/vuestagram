@@ -6,6 +6,11 @@ export default {
         return Api().get('posts/feed/'+ user_id)
         
     },  
+    getPostLikes(post_id) {
+  
+        return Api().get('posts/likes/'+ post_id)
+        
+    },  
     postComment(data) {
   
         return Api().post('posts/comment/', data)

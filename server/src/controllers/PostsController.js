@@ -103,25 +103,36 @@ module.exports = {
                     [Op.or]: [{user_id: user_id}, {user_id: relationships_id }]
                 }})
                 
-            const getComments = await Post_comments.findAll({ 
+            /*const getComments = await Post_comments.findAll({ 
                 where: { 
                     [Op.or]: [{user_id: user_id}, {user_id: relationships_id }]
-                }})
+                }})*/
 
             const post_user_id = getPosts.map(post => (post.user_id))
-            //const post_id = getPosts.map(post => (post.post_id))
+            const post_id = getPosts.map(post => (post.id))
+
+            const getComments = await Post_comments.findAll({ 
+                where: { 
+                    [Op.or]: [{post_id: post_id}]
+                }
+            })
+
+            let postLikes = await Post_likes.findAll({ 
+                where: {  post_id: post_id}
+            })
 
             const allPosts = getPosts
 
             const user = await User.findAll({ where: { [Op.or]: [{id: post_user_id}]}, attributes: ['id', 'username','profile_picture'] })
-            const likes= await Post_likes.findAll({ where: {user_id: post_user_id}})
+            const likeByUser = await Post_likes.findAll({ where: {user_id: post_user_id}})
             
 
             res.send({
                 posts: allPosts,
                 users: user,
                 comments: getComments,
-                likes
+                postLikes,
+                likeByUser
             })
 
 
@@ -168,7 +179,23 @@ module.exports = {
             })
         } 
 
-                },  
+        },   
+        async getPostLikes (req, res) {
+            try {
+
+            // post id
+            const {post_id} = req.params
+            
+            // Count how many people followers user id has
+            let postLikes = await Post_likes.findAndCountAll({ where: {  post_id: post_id}})
+            res.send({postLikes})
+            
+        } catch(err) {
+            res.status(500).send({
+                error: 'error bruv'
+            })
+        } 
+        },  
 
         
         getAllPosts (req, res) {

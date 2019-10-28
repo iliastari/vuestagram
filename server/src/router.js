@@ -17,6 +17,7 @@ module.exports = (app) => {
     app.post('/posts/unlike/', PostsController.unlikePost) // unlike a post
 
     app.get('/posts/:id', PostsController.getPost) // get post based on ID
+    app.get('/posts/likes/:post_id', PostsController.getPostLikes) // get post based on ID
 
     app.get('/posts/feed/:user_id', PostsController.getFeedPosts) // get all posts of the people the user is following
 
